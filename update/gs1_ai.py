@@ -26,7 +26,7 @@ import json
 import re
 
 import lxml.html
-import requests
+from security import safe_requests
 
 
 # the location of the GS1 application identifiers
@@ -42,7 +42,7 @@ def fetch_ais():
     headers = {
         'User-Agent': user_agent,
     }
-    response = requests.get(download_url, headers=headers, timeout=30)
+    response = safe_requests.get(download_url, headers=headers, timeout=30)
     document = lxml.html.document_fromstring(response.content)
     element = document.findall('.//script[@type="application/ld+json"]')[0]
     data = json.loads(element.text)

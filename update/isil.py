@@ -26,7 +26,7 @@ code prefixes."""
 import re
 
 import lxml.html
-import requests
+from security import safe_requests
 
 
 spaces_re = re.compile(r'\s+', re.UNICODE)
@@ -42,7 +42,7 @@ def clean(td):
 
 
 if __name__ == '__main__':
-    response = requests.get(download_url, timeout=30)
+    response = safe_requests.get(download_url, timeout=30)
     response.raise_for_status()
     print('# generated from ISIL Registration Authority, downloaded from')
     print('# %s' % download_url)

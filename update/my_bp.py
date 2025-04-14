@@ -27,7 +27,7 @@ import re
 from collections import defaultdict
 
 import lxml.html
-import requests
+from security import safe_requests
 
 
 # URLs that are downloaded
@@ -68,14 +68,14 @@ if __name__ == '__main__':
     }
     results = defaultdict(lambda: defaultdict(set))
     # read the states
-    response = requests.get(state_list_url, headers=headers, verify=ca_certificate, timeout=30)
+    response = safe_requests.get(state_list_url, headers=headers, verify=ca_certificate, timeout=30)
     response.raise_for_status()
     for state, bps in parse(response.content):
         for bp in bps:
             results[bp]['state'] = state
             results[bp]['countries'].add('Malaysia')
     # read the countries
-    response = requests.get(country_list_url, headers=headers, verify=ca_certificate, timeout=30)
+    response = safe_requests.get(country_list_url, headers=headers, verify=ca_certificate, timeout=30)
     response.raise_for_status()
     for country, bps in parse(response.content):
         for bp in bps:

@@ -26,8 +26,7 @@ IBAN and BIC codes as published by the Czech National Bank."""
 import csv
 import os.path
 from io import StringIO
-
-import requests
+from security import safe_requests
 
 
 # The location of the CSV version of the bank identification codes. Also see
@@ -48,7 +47,7 @@ def get_values(csv_reader):
 
 
 if __name__ == '__main__':
-    response = requests.get(download_url, timeout=30)
+    response = safe_requests.get(download_url, timeout=30)
     response.raise_for_status()
     csv_reader = csv.reader(StringIO(response.content.decode('utf-8')), delimiter=';')
     print('# generated from %s downloaded from' % os.path.basename(download_url))

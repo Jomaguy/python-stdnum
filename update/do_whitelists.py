@@ -30,8 +30,7 @@ import sys
 import tempfile
 import textwrap
 import zipfile
-
-import requests
+from security import safe_requests
 
 
 # Ensure that our local stdnum implementation is used
@@ -70,7 +69,7 @@ if __name__ == '__main__':
     # Download and read the ZIP file with valid data
     with tempfile.TemporaryFile() as tmp:
         # Download the zip file to a temporary file
-        response = requests.get(download_url, stream=True, timeout=30)
+        response = safe_requests.get(download_url, stream=True, timeout=30)
         response.raise_for_status()
         print('%s: %s' % (
             os.path.basename(download_url),

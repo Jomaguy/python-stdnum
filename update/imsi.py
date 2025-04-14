@@ -25,8 +25,7 @@ import os
 import re
 import sys
 from collections import defaultdict
-
-import requests
+from security import safe_requests
 
 
 # Ensure that our local stdnum implementation is used
@@ -155,7 +154,7 @@ def get_mncs_from_wikipedia():
     for page in wikipedia_pages:
         url = 'https://en.wikipedia.org/w/index.php?title=%s&action=raw' % (
             page.replace(' ', '_'))
-        response = requests.get(url, timeout=30)
+        response = safe_requests.get(url, timeout=30)
         response.raise_for_status()
         country = cc = ''
         for line in response.iter_lines(decode_unicode=True):
