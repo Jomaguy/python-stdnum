@@ -25,8 +25,7 @@ the data needed to correctly parse and validate IBANs."""
 
 import csv
 from collections import defaultdict
-
-import requests
+from security import safe_requests
 
 
 # The place where the current version of
@@ -44,7 +43,7 @@ def get_country_codes(line):
 
 
 if __name__ == '__main__':
-    response = requests.get(download_url, timeout=30)
+    response = safe_requests.get(download_url, timeout=30)
     response.raise_for_status()
     print('# generated from swift_standards_infopaper_ibanregistry_1.txt,')
     print('# downloaded from %s' % download_url)

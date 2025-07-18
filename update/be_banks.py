@@ -24,9 +24,8 @@
 IBAN and BIC codes as published by the Belgian National Bank."""
 
 import os.path
-
-import requests
 import xlrd
+from security import safe_requests
 
 
 # The location of the XLS version of the bank identification codes. Also see
@@ -77,7 +76,7 @@ def get_values(sheet):
 
 
 if __name__ == '__main__':
-    response = requests.get(download_url, timeout=30)
+    response = safe_requests.get(download_url, timeout=30)
     response.raise_for_status()
     workbook = xlrd.open_workbook(file_contents=response.content)
     sheet = workbook.sheet_by_index(0)

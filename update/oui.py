@@ -27,8 +27,7 @@ manufacturers by MAC address."""
 import csv
 from collections import defaultdict
 from itertools import chain
-
-import requests
+from security import safe_requests
 
 
 # The URLs of the MA-L, MA-M and MA-S registries that are downloaded to
@@ -45,7 +44,7 @@ user_agent = 'Mozilla/5.0 (compatible; python-stdnum updater; +https://arthurdej
 def download_csv(url):
     """Download the list from the site and provide assignment and
     organisation names."""
-    response = requests.get(url, timeout=500, headers={'User-Agent': user_agent})
+    response = safe_requests.get(url, timeout=500, headers={'User-Agent': user_agent})
     response.raise_for_status()
     for row in csv.DictReader(line.decode('utf-8') for line in response.iter_lines()):
         o = row['Organization Name'].strip().replace('"', '%')

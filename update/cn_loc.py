@@ -28,8 +28,7 @@ from __future__ import print_function, unicode_literals
 import sys
 from collections import OrderedDict
 from datetime import datetime
-
-import requests
+from security import safe_requests
 
 
 data_url = 'https://github.com/cn/GB2260'
@@ -58,7 +57,7 @@ def fetch_data():
     """Return the data from tab-separated revisions as one code/name dict."""
     data_collection = OrderedDict()
     for revision in data_revisions:
-        response = requests.get('%s/raw/release/%s.txt' % (data_url, revision), timeout=120)
+        response = safe_requests.get('%s/raw/release/%s.txt' % (data_url, revision), timeout=120)
         response.raise_for_status()
         if response.ok:
             print('%s is fetched' % revision, file=sys.stderr)

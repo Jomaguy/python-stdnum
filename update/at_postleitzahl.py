@@ -23,8 +23,7 @@
 """This download list of postal codes from Austrian Post."""
 
 from __future__ import print_function, unicode_literals
-
-import requests
+from security import safe_requests
 
 
 # The URL of postal codes on the Austrian open-data portal in CSV format.
@@ -46,7 +45,7 @@ regions = {
 
 
 if __name__ == '__main__':
-    response = requests.get(download_url, timeout=30)
+    response = safe_requests.get(download_url, timeout=30)
     response.raise_for_status()
     data = response.json()
     # print header

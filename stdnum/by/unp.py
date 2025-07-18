@@ -43,6 +43,7 @@ InvalidChecksum: ...
 
 from stdnum.exceptions import *
 from stdnum.util import clean, isdigits
+from security import safe_requests
 
 
 # Mapping of Cyrillic letters to Latin letters
@@ -113,12 +114,7 @@ def check_nalog(number, timeout=30, verify=True):  # pragma: no cover (not part 
     This basically returns the JSON response from the web service as a dict.
     Will return ``None`` if the number is invalid or unknown.
     """
-    # this function isn't automatically tested because it would require
-    # network access for the tests and unnecessarily load the web service
-    # Since the nalog.gov.by web site currently provides an incomplete
-    # certificate chain, we provide our own.
-    import requests
-    response = requests.get(
+    response = safe_requests.get(
         'https://www.portal.nalog.gov.by/grp/getData',
         params={
             'unp': compact(number),

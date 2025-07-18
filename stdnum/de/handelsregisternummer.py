@@ -55,6 +55,7 @@ import unicodedata
 
 from stdnum.exceptions import *
 from stdnum.util import clean
+from security import safe_requests
 
 
 # The known courts that have a Handelsregister
@@ -351,11 +352,8 @@ def check_offeneregister(number, timeout=30, verify=True):  # pragma: no cover (
 
     Will return None if the number is invalid or unknown.
     """
-    # this function isn't automatically tested because it would require
-    # network access for the tests and unnecessarily load the web service
-    import requests
     court, registry, number, qualifier = _split(number)
-    response = requests.get(
+    response = safe_requests.get(
         _offeneregister_url,
         params={
             'sql': '''
