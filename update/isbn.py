@@ -60,7 +60,7 @@ if __name__ == '__main__':
     response.raise_for_status()
 
     # parse XML document
-    document = lxml.etree.fromstring(response.content)
+    document = lxml.etree.fromstring(response.content, parser=lxml.etree.XMLParser(resolve_entities=False))
 
     # dump data from document
     print('# file serial %s' % document.find('./MessageSerialNumber').text.strip())
